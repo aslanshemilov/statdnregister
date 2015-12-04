@@ -15,16 +15,17 @@ public class StatCfgListener implements ChannelListener {
 
     @Override
     public void onChannelOpened(EventObject eventObject) {
-
+        System.out.format("%s opened\n", eventObject.getSource().getClass().getName());
     }
 
     @Override
     public void onChannelClosed(ChannelClosedEvent channelClosedEvent) {
+        System.out.format("%s closed\n", channelClosedEvent.getSource().getClass().getName());
 
     }
 
     @Override
     public void onChannelError(ChannelErrorEvent channelErrorEvent) {
-
+        System.out.format("%s error\n", channelErrorEvent.getSource().getClass().getName());
     }
 }

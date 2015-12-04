@@ -25,6 +25,7 @@ public class StatModule extends AbstractModule {
             bind(IConfigDNProvider.class).to(ConfigDNProvider.class);
             bind(IConfigObjectProvider.class).to(ConfigObjectProvider.class);
             bind(IConfigSwitchProvider.class).to(ConfigSwitchProvider.class);
+
             //bind(CfgConnection.class).to(CfgConnection.class);
         } catch (IOException iox){
             System.out.println(iox.toString());

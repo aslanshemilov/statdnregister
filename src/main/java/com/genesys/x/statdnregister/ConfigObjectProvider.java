@@ -3,6 +3,7 @@ package com.genesys.x.statdnregister;
 import com.genesys.x.statdnregister.interfaces.IConfigObjectProvider;
 import com.genesyslab.platform.applicationblocks.com.*;
 import com.genesyslab.platform.applicationblocks.com.objects.CfgFilter;
+import com.genesyslab.platform.applicationblocks.com.objects.CfgService;
 import com.genesyslab.platform.applicationblocks.com.queries.CfgFilterQuery;
 import com.genesyslab.platform.applicationblocks.com.queries.CfgObjectiveTableQuery;
 import com.genesyslab.platform.applicationblocks.com.runtime.factory.CfgFilterFactory;
@@ -66,6 +67,14 @@ public class ConfigObjectProvider implements IConfigObjectProvider {
 
     @Override
     public <TT extends ICfgObject> Collection<TT> getObjects(Class<TT> type, ICfgQuery<TT> query) {
+        try {
+            return configService.retrieveMultipleObjects(type, query, 60000);
+        } catch (ConfigException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }

@@ -96,7 +96,6 @@ public class CfgConnection implements ChannelListener, MessageHandler {
 
     @Override
     public void onChannelClosed(ChannelClosedEvent channelClosedEvent) {
-        System.out.println("Closed");
         if (this.receiver != null)
             this.receiver.interrupt();
 
@@ -105,7 +104,6 @@ public class CfgConnection implements ChannelListener, MessageHandler {
 
     @Override
     public void onChannelError(ChannelErrorEvent channelErrorEvent) {
-        System.out.println(channelErrorEvent.toString());
     }
 
     @Override

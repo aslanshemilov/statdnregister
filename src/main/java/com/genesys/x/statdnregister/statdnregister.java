@@ -5,6 +5,7 @@ import com.genesys.x.statdnregister.interfaces.IConfigDNProvider;
 import com.genesys.x.statdnregister.interfaces.IConfigSwitchProvider;
 import com.genesys.x.statdnregister.interfaces.IStatDNConfiguration;
 import com.genesyslab.platform.applicationblocks.com.objects.*;
+import com.genesyslab.platform.applicationblocks.com.queries.CfgDNQuery;
 import com.genesyslab.platform.applicationblocks.com.queries.CfgSwitchQuery;
 import com.genesyslab.platform.commons.collections.Pair;
 import com.genesyslab.platform.commons.protocol.ProtocolException;
@@ -14,6 +15,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import java.io.IOException;
+import java.util.Collection;
 
 public class statdnregister {
 	public static void main(String[] args) throws InterruptedException, ProtocolException {
@@ -26,6 +28,9 @@ public class statdnregister {
         CfgConnection cfgserver = injector.getInstance(CfgConnection.class);
 
         cfgserver.open(false);
+
+        StatConnection statServer = injector.getInstance(StatConnection.class);
+
         ConfigObjectProvider searcher = injector.getInstance(ConfigObjectProvider.class);
 
         IConfigAppProvider appProvider = injector.getInstance(IConfigAppProvider.class);
@@ -41,21 +46,17 @@ public class statdnregister {
                 CfgApplication server = con.getAppServer();
                 if (server.getType() == CfgAppType.CFGTServer) {
                     System.out.println(server.getName());
-                    for (Object o : server.getAppPrototype().getUserProperties()) {
-                        Pair p = (Pair) o;
-                        System.out.println(p.getStringKey());
-                        System.out.println(p.getStringValue());
-                    }
-                    for (Object o : server.getFlexibleProperties()){
-                        Pair p = (Pair)o;
-                        System.out.println(p.getStringKey());
-                        System.out.println(p.getStringValue());
-                    }
-
                     CfgSwitchQuery q = new CfgSwitchQuery();
                     q.setTserverDbid(server.getDBID());
                     CfgSwitch s = switchProvider.getSwitch(q);
                     System.out.println(s.getName());
+
+                    CfgDNQuery dnq = new CfgDNQuery();
+                    dnq.setSwitchDbid(s.getDBID());
+                    /*Collection<CfgDN> dnlist = dnProvider.getDNs(dnq);
+                    for (CfgDN d: dnlist){
+                        System.out.println(d.getNumber());
+                    }*/
                 }
             }
         } catch (Exception ex){
@@ -68,6 +69,7 @@ public class statdnregister {
             e.printStackTrace();
         }
         cfgserver.close();
+        statServer.close();
 
     }
 }
