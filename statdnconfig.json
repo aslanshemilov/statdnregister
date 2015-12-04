@@ -1,0 +1,7 @@
+{
+  "configserverurl":"tcp://default:password@esx35-ip20-105.gws.genesys.com:8888",
+  "statservername":"SS",
+  "extensionstatistic":"CurrentDNState",
+  "virtualqueuestatistic":"CurrentDNState",
+  "clientapplication":"default"
+}

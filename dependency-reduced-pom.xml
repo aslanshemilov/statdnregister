@@ -34,6 +34,10 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.3</version>
+          <configuration>
+            <debug>true</debug>
+            <debuglevel>lines,vars,source</debuglevel>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-source-plugin</artifactId>
@@ -54,6 +58,23 @@
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>3.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.2</version>
+          <executions>
+            <execution>
+              <id>Test</id>
+              <phase>test</phase>
+              <goals>
+                <goal>java</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <mainClass>com.genesys.x.statdnregister.statdnregister</mainClass>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -148,9 +169,9 @@
   </profiles>
   <repositories>
     <repository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>central</id>
+      <name>central</name>
+      <url>https://repo1.maven.org/maven2</url>
     </repository>
     <repository>
       <id>reference-dco</id>
@@ -158,96 +179,31 @@
       <url>http://ci-vm30.us.int.genesyslab.com:8200/nexus/content/groups/reference-cache/</url>
     </repository>
   </repositories>
-  <dependencies>
-    <dependency>
-      <groupId>io.dropwizard</groupId>
-      <artifactId>dropwizard-testing</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>junit</artifactId>
-          <groupId>junit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>mockito-core</artifactId>
-          <groupId>org.mockito</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>objenesis</artifactId>
-          <groupId>org.objenesis</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>assertj-core</artifactId>
-          <groupId>org.assertj</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-      <artifactId>jersey-test-framework-provider-inmemory</artifactId>
-      <version>2.22.1</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>javax.servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>junit</artifactId>
-          <groupId>junit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jersey-test-framework-core</artifactId>
-          <groupId>org.glassfish.jersey.test-framework</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>asm-debug-all</artifactId>
-          <groupId>org.ow2.asm</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-      <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-      <version>2.22.1</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>javax.servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>junit</artifactId>
-          <groupId>junit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jersey-container-grizzly2-http</artifactId>
-          <groupId>org.glassfish.jersey.containers</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jersey-container-grizzly2-servlet</artifactId>
-          <groupId>org.glassfish.jersey.containers</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jersey-test-framework-core</artifactId>
-          <groupId>org.glassfish.jersey.test-framework</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>asm-debug-all</artifactId>
-          <groupId>org.ow2.asm</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-  </dependencies>
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.dropwizard</groupId>
-        <artifactId>dropwizard-bom</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>com.genesyslab.platform</groupId>
+        <artifactId>protocols-bom</artifactId>
+        <version>852.0.3</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.genesyslab.platform</groupId>
+        <artifactId>appblocks-bom</artifactId>
+        <version>852.0.3</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>2.6.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>2.6.3</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
