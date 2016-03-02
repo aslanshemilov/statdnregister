@@ -12,6 +12,9 @@ import java.util.EventObject;
  * Created by dburdick on 12/3/2015.
  */
 public class StatCfgListener implements ChannelListener {
+    public StatCfgListener() {
+        System.out.println("StatCfgListener creator");
+    }
 
     @Override
     public void onChannelOpened(EventObject eventObject) {

@@ -13,4 +13,5 @@ public interface IStatDNConfiguration {
     String getVirtualQueueStatistic();
 
     String getClientApplication();
+
 }

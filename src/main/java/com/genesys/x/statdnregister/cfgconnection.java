@@ -44,7 +44,7 @@ public class CfgConnection implements ChannelListener, MessageHandler {
         if (listener != null) {
             configServer.addChannelListener(listener);
         }
-        configServer.setMessageHandler(this);
+        //configServer.setMessageHandler(this);
     }
 
     public void close(){

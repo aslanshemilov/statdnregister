@@ -1,7 +1,8 @@
 {
-  "configserverurl":"tcp://default:password@esx35-ip20-105.gws.genesys.com:8888",
+  "configserverurl_":"tcp://default:password@esx35-ip20-105.gws.genesys.com:8888",
+  "configserverurl":"tcp://default:password@lp-linux-01.domain.local:2020",
   "statservername":"SS",
   "extensionstatistic":"CurrentDNState",
-  "virtualqueuestatistic":"CurrentDNState",
+  "virtualqueuestatistic":"CurrNumberWaitingCalls",
   "clientapplication":"default"
 }

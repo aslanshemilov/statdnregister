@@ -1,6 +1,7 @@
 package com.genesys.x.statdnregister;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -19,6 +20,7 @@ import java.net.URL;
  * Created by dburdick on 12/2/2015.
  */
 @Singleton
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class StatDNConfiguration implements IStatDNConfiguration {
     private String configServerUrl;
     private String statServerName;

@@ -7,10 +7,12 @@ import com.genesys.x.statdnregister.interfaces.IStatDNConfiguration;
 import com.genesyslab.platform.applicationblocks.com.objects.*;
 import com.genesyslab.platform.applicationblocks.com.queries.CfgDNQuery;
 import com.genesyslab.platform.applicationblocks.com.queries.CfgSwitchQuery;
-import com.genesyslab.platform.commons.collections.Pair;
 import com.genesyslab.platform.commons.protocol.ProtocolException;
-import com.genesyslab.platform.configuration.protocol.types.CfgAppComponentType;
 import com.genesyslab.platform.configuration.protocol.types.CfgAppType;
+import com.genesyslab.platform.configuration.protocol.types.CfgDNType;
+import com.genesyslab.platform.reporting.protocol.statserver.StatisticObjectType;
+import com.genesyslab.platform.reporting.protocol.statserver.events.EventInfo;
+import com.genesyslab.platform.reporting.protocol.statserver.events.EventStatisticOpened;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -23,13 +25,11 @@ public class statdnregister {
 
         IStatDNConfiguration config = injector.getInstance(IStatDNConfiguration.class);
 
-        System.out.println(config.getConfigServerUrl());
-
         CfgConnection cfgserver = injector.getInstance(CfgConnection.class);
-
         cfgserver.open(false);
 
         StatConnection statServer = injector.getInstance(StatConnection.class);
+        statServer.open();
 
         ConfigObjectProvider searcher = injector.getInstance(ConfigObjectProvider.class);
 
@@ -52,11 +52,33 @@ public class statdnregister {
                     System.out.println(s.getName());
 
                     CfgDNQuery dnq = new CfgDNQuery();
+                    System.out.println(s.getDBID());
                     dnq.setSwitchDbid(s.getDBID());
-                    /*Collection<CfgDN> dnlist = dnProvider.getDNs(dnq);
+                    Collection<CfgDN> dnlist = dnProvider.getDNs(dnq);
+                    System.out.println(dnlist.size());
                     for (CfgDN d: dnlist){
-                        System.out.println(d.getNumber());
-                    }*/
+                        EventStatisticOpened opened = null;
+                        String name = String.format("%s@%s", d.getNumber(), s.getName());
+                        String tenant = d.getTenant().getName();
+                        if (d.getType() == CfgDNType.CFGExtension){
+                            opened = statServer.openStatistic(tenant, name,
+                                    StatisticObjectType.RegularDN, config.getExtensionStatistic());
+                        } else if (d.getType() == CfgDNType.CFGVirtACDQueue){
+                            opened = statServer.openStatistic(tenant, name,
+                                    StatisticObjectType.Queue, config.getVirtualQueueStatistic());
+                        }else if (d.getType() == CfgDNType.CFGRoutingQueue){
+                            opened = statServer.openStatistic(tenant, name,
+                                    StatisticObjectType.RoutePoint, config.getVirtualQueueStatistic());
+                        }
+
+                        if (opened != null){
+                            System.out.format("Registered %s with id %d\n", name, opened.getReferenceId());
+                            EventInfo eventInfo = statServer.peekStatistic(opened.getReferenceId());
+                            if (eventInfo != null){
+                                System.out.format("Peek Value %s\n", eventInfo.getStringValue());
+                            }
+                        }
+                    }
                 }
             }
         } catch (Exception ex){
