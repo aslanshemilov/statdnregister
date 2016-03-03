@@ -95,39 +95,11 @@
 
     <repositories>
         <repository>
-            <id>central</id>
-            <name>central</name>
-            <url>https://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>reference-dco</id>
-            <name>reference-dco</name>
-            <url>http://ci-vm30.us.int.genesyslab.com:8200/nexus/content/groups/reference-cache/</url>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <url>file://${project.basedir}/libs</url>
         </repository>
     </repositories>
-
-    <profiles>
-        <profile>
-            <id>nexus</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>reference-dco</id>
-                    <name>reference-dco</name>
-                    <url>http://ci-vm30.us.int.genesyslab.com:8200/nexus/content/groups/reference-cache/</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>reference-dco</id>
-                    <name>reference-dco</name>
-                    <url>http://ci-vm30.us.int.genesyslab.com:8200/nexus/content/groups/reference-cache/</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
 
     <build>
         <pluginManagement>
