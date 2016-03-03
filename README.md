@@ -1,0 +1,1 @@
+Simple utility to connect to Genesys Stat Server and Configuration Server.  Performs StatPeek to determine if StatServer is registered for events.
