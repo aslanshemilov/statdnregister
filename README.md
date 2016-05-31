@@ -1,1 +1,3 @@
-Simple utility to connect to Genesys Stat Server and Configuration Server.  Performs StatPeek to determine if StatServer is registered for events.
+# StatCfgDN
+Simple utility that retrieves DN's from Configuration Server and validates StatPeek can return result from Stat Server.
+

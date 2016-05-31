@@ -24,6 +24,7 @@
              so that dropwizard-example site doesn't get staged and deployed. -->
         <maven.site.skip>true</maven.site.skip>
         <maven.site.deploy.skip>true</maven.site.deploy.skip>
+        <genesys.psdk.version>852.1.4</genesys.psdk.version>
     </properties>
 
     <dependencyManagement>
@@ -31,14 +32,14 @@
             <dependency>
                 <groupId>com.genesyslab.platform</groupId>
                 <artifactId>protocols-bom</artifactId>
-                <version>852.0.3</version>
+                <version>${genesys.psdk.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>com.genesyslab.platform</groupId>
                 <artifactId>appblocks-bom</artifactId>
-                <version>852.0.3</version>
+                <version>${genesys.psdk.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -228,6 +229,7 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <configuration>
                     <createDependencyReducedPom>true</createDependencyReducedPom>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
